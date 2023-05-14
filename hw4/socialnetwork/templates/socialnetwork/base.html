@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+	    {% load static %}
+		<link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<div class="header" id="id_header_div">
+			<div class="big-heading" id="id_site_name">
+				Social Network
+			</div>
+
+			<div class="user-info">
+				{% block user-info %}
+				{% endblock %}
+			</div>
+		</div>
+
+	    <div class="message">
+	        {% block message %}
+			{% endblock %}
+	    </div>
+
+	    <div class="content">
+		    {% block content %}
+		    {% endblock %}
+		</div>
+	</body>
+</html>

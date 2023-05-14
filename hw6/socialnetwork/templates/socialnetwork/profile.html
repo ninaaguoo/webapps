@@ -1,0 +1,53 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <a href="{% url 'profile' %}">
+        <button id="id_nav_profile">{{ profile.user.first_name }} {{ profile.user.last_name }}</button>
+    </a>
+    <div>
+        <a href="{% url 'global' %}">
+            <button id="id_nav_global_stream">Global</button>
+        </a>
+        <a href="{% url 'follower' %}">
+            <button id="id_nav_follower_stream">Follower</button>
+        </a>
+        <a href="{% url 'logout' %}">
+            <button id="id_nav_logout">Logout</button>
+        </a>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name">Profile Page for {{ profile.user.first_name }} {{ profile.user.last_name }}</div>
+{% endblock %}
+
+
+{% block content %}
+    {% if not profile.picture %}
+        <img id="id_user_picture" src="../../static/pfp.jpg" alt="profile pic">
+    {% else %}
+        <img id="id_user_picture" src="{% url 'photo' profile.user.id %}" alt="profile pic">
+    {% endif %}
+    <form action="{% url 'profile' %}" method="post" name="bio" enctype="multipart/form-data">
+        <table>
+            {% for field in form.visible_fields %}
+                <tr>
+                    <td>{{field.label_tag}}</td>
+                    <td>{{field}}</td>
+                </tr>
+            {% endfor %}
+            <tr><td colspan="3"><input id="id_update_profile_button" type="submit" value="Submit"></td></tr>
+        </table>
+        {% csrf_token %}
+    </form>
+    <div> 
+        You are following:
+        <ul>
+            {% for u in profile.following.all %}
+                <li>
+                    <a href="{% url 'otherprofile' u.id %}" id="id_profile_link_{{u}}">{{u.first_name}}{{u.last_name}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

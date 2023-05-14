@@ -1,0 +1,39 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <a href="{% url 'profile' %}">
+        <button id="id_nav_profile">{{ user.first_name }} {{ user.last_name }}</button>
+    </a>
+    <div>
+        <a href="{% url 'global' %}">
+            <button id="id_nav_global_stream">Global</button>
+        </a>
+        <a href="{% url 'follower' %}">
+            <button id="id_nav_follower_stream">Follower</button>
+        </a>
+        <a href="{% url 'logout' %}">
+            <button id="id_nav_logout">Logout</button>
+        </a>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name">Profile Page for <label for="{{ form.user.id_first_name }}">{{ user.first_name }}</label> <label for="{{ form.user.id_last_name }}">{{ user.last_name }}</label></div>
+{% endblock %}
+
+
+{% block content %}
+    <img id="id_user_picture" src="../../static/pfp.jpg" alt="profile pic">
+    <form ...>
+        <textarea id="id_bio_input_text">hi this is nina</textarea>
+        <br>
+        <label>Profile Picture: </label><input type="file" id="id_profile_picture"> 
+        <br>
+        <button id="id_update_profile_button">Submit</button>
+        <br>
+        <label>You are following: </label>
+        <br>
+        <a id="id_profile_link_jeffeppinger" href="{% url 'otherprofile' %}">Jeff Eppinger</a>
+        {% csrf_token %}
+    </form>
+{% endblock %}

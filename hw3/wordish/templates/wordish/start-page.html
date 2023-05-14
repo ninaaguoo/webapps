@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../../static/wordish.css">
+    <title>Wordish</title>    
+</head>
+<body>
+    <div id="message"> {{ message }} </div>
+    <br>
+    <form class="target" action="/" method="POST">
+        <label>Target:</label>
+        <input id="target_text" name = "target" type="text">
+        <button id="start_button">Submit</button>
+        {% csrf_token %}
+    </form>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <a href="{% url 'profile' %}">
+        <button id="id_nav_profile">{{ user.first_name }} {{ user.last_name }}</button>
+    </a>
+    <div>
+        <a href="{% url 'global' %}">
+            <button id="id_nav_global_stream">Global</button>
+        </a>
+        <a href="{% url 'follower' %}">
+            <button id="id_nav_follower_stream">Follower</button>
+        </a>
+        <a href="{% url 'logout' %}">
+            <button id="id_nav_logout">Logout</button>
+        </a>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name">Global Stream</div>
+{% endblock %}
+
+{% block content %}
+    <!--<form action="{% url 'global' %}" class="post" method="POST">-->
+    <div>
+        <label>New Post:</label>
+        <input id="id_post_input_text" type="text" name="text">
+        <button onclick="addItem()" id="id_post_button">Submit</button> 
+        <span id="error" class="error"></span>
+    </div>
+        <!--{% csrf_token %}
+    </form>-->
+
+    <div id="my-posts-go-here">
+        <!-- <label>New Comment:</label>
+        <input id="id_comment_input_text" type="text" name="text">
+        <button onclick="addComment({{post.id}})" id="id_comment_button_{{post.id}}">Submit</button>  --> 
+    </div>
+
+    <script>
+        const addItemURL = "{% url 'ajax-add-item' %}"
+        const addCommentURL = "{% url 'ajax-add-comment' %}"
+        // Save this user's username so our JS deleteItem() function can determine
+        // whether show delete buttons
+        // const myUserName = "{{ request.user.username }}"
+
+        // // If you wish to use the template language's URL reverse function, you can
+        // // do it here in the HTML file, but not in the JS file
+
+        // Call getList() as soon as page is finished loading to display the todolist
+        
+        window.onload = () => loadPosts('global');
+
+        // ... also call getList every 5 seconds hereafter to update the list
+        window.setInterval( () => loadPosts('global'), 5000);
+    </script>
+
+   
+
+    <!--{% for post in posts %}
+        <div id="id_post_div_{{post.id}}">
+            <a class="profile" id="id_post_profile_{{post.id}}" href="{% url 'otherprofile' post.user.id %}">Post by {{post.user.first_name}} {{post.user.last_name}} </a>
+            <p class="texts" id="id_post_text_{{post.id}}">{{post.text}}</p> <p class="date" id="id_post_date_time_{{post.id}}">{{post.creation_time|date:"n/j/Y g:i A"}}</p>
+        </div>
+        <br>
+        <form action="{% url 'global' %}" class="comment" method="POST">
+            <label>Comment:</label>
+            <input id="id_comment_input_text_{{post.id}}" type="text" name="new-comment">
+            <button id="id_comment_button_{{post.id}}">Submit</button> 
+            {% csrf_token %}
+        </form>
+    {% endfor %}-->
+        
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <a href="{% url 'profile' %}">
+        <button id="id_nav_profile">{{ user.first_name }} {{ user.last_name }}</button>
+    </a>
+    <div>
+        <a href="{% url 'global' %}">
+            <button id="id_nav_global_stream">Global</button>
+        </a>
+        <a href="{% url 'follower' %}">
+            <button id="id_nav_follower_stream">Follower</button>
+        </a>
+        <a href="{% url 'logout' %}">
+            <button id="id_nav_logout">Logout</button>
+        </a>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name">Global Stream</div>
+{% endblock %}
+
+{% block content %}
+    
+    <label>New Post:</label><input id="id_post_input_text" type="text" name="new-post">
+    <button id="id_post_button">Submit</button> 
+    <div id="id_post_div_1">
+       <a class="profile" id="id_post_profile_1" href="{% url 'otherprofile' %}">Post by Jeff Eppinger</a>
+        <span class="texts" id="id_post_text_1">hi</span>
+        <span class="date" id="id_post_date_time_1">1/2/2023 1:00 PM</span>
+        <br>
+        <label>New Comment:</label><input id="id_comment_input_text_1" type="text" name="new-comment">
+        <button id="id_comment_button_1">Submit</button> 
+        <div class="commentdiv" id="id_comment_div_1">
+            <a class="profile" id="id_comment_profile_1" href="{% url 'otherprofile' %}">Comment by Jeff Eppinger</a>
+            <span class="texts" id="id_comment_text_1">hi</span>
+            <span class="date" id="id_comment_date_time_1">1/2/2023 1:23 PM</span>
+        </div>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <a href="{% url 'profile' %}">
+        <button id="id_nav_profile">{{ user.first_name }} {{ user.last_name }}</button>
+    </a>
+    <div>
+        <a href="{% url 'global' %}">
+            <button id="id_nav_global_stream">Global</button>
+        </a>
+        <a href="{% url 'profile' %}">
+            <button id="id_nav_follower_stream">Follower</button>
+        </a>
+        <a href="{% url 'logout' %}">
+            <button id="id_nav_logout">Logout</button>
+        </a>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name">Profile Page for Jeff Eppinger</div>
+{% endblock %}
+
+{% block content %}
+    <img id="id_user_picture" src="../../static/follower.jpg" alt="profile pic">
+    <br>
+    <p id="id_user_bio">this is jeff</p>
+    <br>
+    <button id="id_unfollow">Unfollow</button>
+
+{% endblock %}
