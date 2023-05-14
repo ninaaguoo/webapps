@@ -1,0 +1,22 @@
+{% extends "questionnaire/base.html" %}
+
+{% block content %}
+    <p id="question">What is your sexuality?</p>
+    <form method="post" action="{% url 'question' 'sexuality' %}">
+        <table>
+            {% for field in form.visible_fields %}
+                <tr>
+                    <td>{{field.label_tag}}</td>
+                    <td>{{field}}</td>
+                    <td class="error">
+                        {% for error in field.errors %} {{error}} {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% csrf_token %}
+        <a href="{% url 'global' %}">
+            <button id="submit">Submit</button>
+        </a>
+    </form>
+{% endblock %}

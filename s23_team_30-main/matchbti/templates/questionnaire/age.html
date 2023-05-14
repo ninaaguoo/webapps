@@ -1,0 +1,24 @@
+{% extends "questionnaire/base.html" %}
+
+{% block content %}
+    <p id="question">How old are you?</p>
+    <form method="post" action="{% url 'question' 'age' %}">
+        <table>
+            {% for field in form.visible_fields %}
+                <tr>
+                    <td>{{field.label_tag}}</td>
+                    <td>{{field}}</td>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="error">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        {% csrf_token %}
+        <a href="{% url 'global' %}">
+            <button id="submit">Submit</button>
+        </a>
+    </form>
+{% endblock %}

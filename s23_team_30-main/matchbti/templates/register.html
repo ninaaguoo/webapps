@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block user-info %}
+    <div>
+        <a href="{% url 'login' %}">
+            <button class="dropdownButton" id="id_login_link">Login</button>
+        </a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="login" id="id_page_name">Register</p>
+        <form method="post" action="{% url 'register' %}">
+            <table class="login">
+                {{form}}
+            </table>
+            {% csrf_token %}
+            <button type="submit" id="id_register_button">Register</button>
+        </form>
+
+        {% for error in form.non_field_errors %}
+            <p class="errorlist">
+                {{ error }}
+            </p>
+        {% endfor %}
+        <br>
+    </div>
+
+{% endblock %}

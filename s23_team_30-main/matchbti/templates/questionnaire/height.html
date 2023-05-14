@@ -1,0 +1,23 @@
+{% extends "questionnaire/base.html" %}
+
+{% block content %}
+    <p id="question">What is your height?</p>
+    <form method="post" action="{% url 'question' 'height' %}">
+        <table>
+            <td>Height:</td>
+            {% for field in form.visible_fields %}
+                <td>{{field}}</td>
+                {% if field.label == "Height"%} <td>ft</td>
+                {% else %} <td>in</td>
+                {% endif %}
+                <td class="error">
+                    {% for error in field.errors %} {{error}} {% endfor %}
+                </td>
+            {% endfor %}
+        </table>
+        {% csrf_token %}
+        <a href="{% url 'global' %}">
+            <button id="submit">Submit</button>
+        </a>
+    </form>
+{% endblock %}

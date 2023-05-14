@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block user-info %}
+    <div>
+        <a href="{% url 'register' %}">
+            <button class="dropdownButton" id="id_register_link">Register</button>
+        </a>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="678815352406-7g9tq596b5l5fs0v591fi29s6gani5ct.apps.googleusercontent.com.apps.googleusercontent.com">
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="login" id="id_page_name">Login</p>
+        <form method="post" action="{% url 'login' %}">
+            <table class="login">
+                {{form}}
+            </table>
+            {% csrf_token %}
+            <button type="submit" id="id_login_button">Submit</button>
+        </form>
+        <br> <br>
+        <a class="oauth" href="/oauth/login/google-oauth2/?next=/"> Sign In with <i class="fa-brands fa-google"></i> </a>
+    </div>
+
+{% endblock %}

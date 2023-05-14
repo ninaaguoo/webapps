@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+        {% load static %}
+        <link href="../../static/questionnaire.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+            crossorigin="anonymous">
+        </script>
+	</head>
+
+    <body>
+        <div class="header">
+            MatchBTI Questionnaire
+
+            <div class="questionnaire">
+                {% block content %}
+                {% endblock %}
+            </div>
+            {% load static %}
+            <script type="text/javascript" src="{% static 'questionnaire.js' %}"></script>
+        </div>
+    </body>
+</html>

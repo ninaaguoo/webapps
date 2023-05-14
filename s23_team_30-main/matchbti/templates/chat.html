@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block user-info %}
+    <div class="navbar">
+        <a href="{% url 'global' %}">
+            <button class="topButton" id="thisPage">Discover </button>
+        </a>
+        <a href="{% url 'matches' %}">
+            <button class="topButton">Matches</button>
+        </a>
+        <div class="dropdown">
+            <button class="dropdownButton">
+                <i class='fas fa-user-alt'></i> {{ user.first_name }} {{ user.last_name }}
+            </button>
+            <div class="dropdownContent">
+                <a href="{% url 'profile' %}"> View Profile </a>
+                <a href="{% url 'logout' %}"> Log Out </a>   
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name"> <img id="id_user_picture" style="width:75px;height:75px;" src="{% url 'photo' user.profile.id %}"></img>Chat with {{first_name}} {{last_name}}</div>
+    <p id="prompt" class="prompt">{{prompt}}</p>
+    <label class="small"> Start Chatting! </label>
+{% endblock %}
+
+{% block content %}
+    <!-- <div class="user_messages" id="my-user-messages-go-here"></div>
+    <div class="receiver_messages" id="my-receiver-messages-go-here"></div> -->
+    <div class="messages" id="my-messages-go-here"></div>
+
+    <script>
+        window.onload = loadMessages({{receiver_id}});
+        const addMessageURL = "{% url 'ajax-add-message'%}"
+        window.setInterval(() => loadMessages({{receiver_id}}), 1000);
+    </script>
+
+    <div>
+        <input class="input" placeholder="Message" id="id_message_input_text" type="text" name="text">
+        <button class="button" onclick="addMessage({{user_id}}, {{receiver_id}})" id="id_message_button">Send</button> 
+        <span id="error" class="error"></span>
+    </div>
+        
+{% endblock %}

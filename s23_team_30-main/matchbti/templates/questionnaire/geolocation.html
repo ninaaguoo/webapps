@@ -1,0 +1,8 @@
+{% extends "questionnaire/base.html" %}
+
+{% block content %}
+    <p id="question"> Please enable your location to allow MatchBTI to find nearby matches </p>
+    <button onclick="getLocation()">Get location</button>
+    <p id="result"> </p>
+{% endblock %}
+

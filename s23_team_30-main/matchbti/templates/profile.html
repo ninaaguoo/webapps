@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block user-info %}
+    <div class="navbar">
+        <a href="{% url 'global' %}">
+            <button class="topButton" id="thisPage">Discover </button>
+        </a>
+        <a href="{% url 'matches' %}">
+            <button class="topButton">Matches</button>
+        </a>
+        <div class="dropdown">
+            <button class="dropdownButton">
+                <i class='fas fa-user-alt'></i> {{ user.first_name }} {{ user.last_name }}
+            </button>
+            <div class="dropdownContent">
+                <a href="{% url 'logout' %}"> Log Out </a>   
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="show_profile" style="display:block;"> 
+        Profile Page for {{ profile.user.first_name }} {{ profile.user.last_name }}
+        <script>
+            function loadPersonalProfile(item) {
+                // console.log(item);
+                let contentElement = document.getElementsByClassName("content")[0]
+                let element = document.createElement("div")
+                element.className = "card"
+                element.id = "profile-element-container"
+                let profile = "<a " + "class=profile id=id_profile_" + item.id +  " > " + name + " </a>"
+                for (item1 in item.preferences) {
+                    console.log(item1)
+                }
+                element.innerHTML += `<div id="profile-element-container" style="display:block;">
+                                        <div class="center">
+                                            <img id="id_user_picture" src="{% url 'photo' profile.user.id %}">
+                                        </div>
+                                        <div class="profileTitle"> ${item.first_name} ${item.last_name}, ${item.age}, ${item.mbti} <br> </div>
+                                        <div class="profileInfo">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:50%"> ${item.sexuality} </td>
+                                                    <td> ${item.height}ft ${item.heightInches}in </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> ${item.ethnicity} </td>
+                                                    <td> ${item.religion} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> ${item.gender} </td>
+                                                    <td> ${item.preferences} </td>
+                                                </tr>
+                                            </table>
+                                            <br>
+                                            <table>
+                                                <tr>
+                                                    <td class="rowLabel"> Bio </td>
+                                                    <td class="info"> ${item.bio} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowLabel"> School </td>
+                                                    <td class="info"> ${item.school} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowLabel"> Work </td>
+                                                    <td> ${item.work} </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <button class="topButton" id="edit_profile_button" style="display:block; margin:auto;">Edit Profile</button>
+                                    </div>`
+            
+                let editElement = document.createElement("div")
+                editElement.id = "profile-edit-container"
+                editElement.style = "display:none;"
+                editElement.innerHTML = `<form action="{% url 'profile' %}" method="post" name="bio" enctype="multipart/form-data">
+                                            <table>
+                                                {% for field in form.visible_fields %}
+                                                    <tr>
+                                                        <td>{{field.label_tag}}</td>
+                                                        <td>{{field}} {{ form.initial.field.name }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <input class="topButton" id="id_update_profile_button" type="submit" value="Submit Changes">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            {% csrf_token %}
+                                        </form>`
+                
+                contentElement.append(element)
+                contentElement.append(editElement)
+                return contentElement
+            }
+            function toggle() {
+                let profileEditContainer = document.getElementById("profile-edit-container")
+                let profileElementContainer = document.getElementById("profile-element-container")
+                let editProfileButton = document.getElementById("edit_profile_button")
+
+                if (profileEditContainer.style.display === "none") {
+                    profileEditContainer.style.display = "block"
+                    profileElementContainer.style.display = "none"
+                    editProfileButton.style.display = "none"
+                } else {
+                    profileEditContainer.style.display = "none"
+                    profileElementContainer.style.display = "block"
+                    editProfileButton.style.display = "block"
+                }
+            }
+            window.onload = function() {
+                let profileData = {
+                    id: "{{ profile.id }}",
+                    first_name: "{{ profile.user.first_name }}",
+                    last_name: "{{ profile.user.last_name }}",
+                    age: "{{ profile.age }}",
+                    mbti: "{{ profile.mbti }}",
+                    sexuality: "{{ profile.sexuality }}",
+                    height: "{{ profile.height }}",
+                    heightInches: "{{ profile.heightInches }}",
+                    ethnicity: "{{ profile.ethnicity }}",
+                    religion: "{{ profile.religion }}",
+                    bio: "{{ profile.bio }}",
+                    school: "{{ profile.school }}",
+                    work: "{{ profile.work }}",
+                    gender: "{{ profile.gender }}",
+                    preferences: "{{ profile.preferences }}"
+                };
+                let profileElement = loadPersonalProfile(profileData);
+                document.body.appendChild(profileElement);
+                let editProfileButton = document.getElementById("edit_profile_button");
+                editProfileButton.addEventListener("click", toggle);
+            }
+        </script>
+    </div>
+{% endblock %}

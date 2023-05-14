@@ -1,0 +1,33 @@
+{% extends "questionnaire/base.html" %}
+
+{% block content %}
+    <p id="question"> Please upload a profile picture. </p>
+    <form enctype="multipart/form-data" action="{% url 'question' 'picture' %}" method="post">
+        <table>
+            {% for field in form.visible_fields %}
+                <tr> 
+                    <td>
+                        <input type="file" name="picture" id="id_picture" accept="image/*" onchange="loadFile(event)">
+                    </td>
+                </tr>
+                <tr>
+                    <td> <img id="output"/> </td>
+                    <td class="error">
+                        {% for error in field.errors %} {{error}} {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr><td colspan="3"><input type="submit" value="Submit"></td></tr>
+        </table>
+        {% csrf_token %}
+    </form>
+    <script>
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {URL.revokeObjectURL(output.src)}
+        };
+    </script>
+{% endblock %}
+
+        

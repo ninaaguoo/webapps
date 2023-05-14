@@ -1,0 +1,29 @@
+{% extends "questionnaire/base.html" %}
+
+{% block content %}
+    <p id="question">Who would you like to date?</p>
+    <form method="post" action="{% url 'question' 'preferences' %}">
+        <table>
+            {% for field in form.visible_fields %}
+                <tr>
+                    <td>{{field.label_tag}}</td>
+                    <td>
+                        {% for value, text in field.field.choices %}
+                            <div class="option">
+                                <label for="id_preferences_{{text}}"><input type="checkbox" name="preferences" value={{text}} id="id_preferences_{{text}}"> {{text}}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </td>
+                    <td class="error">
+                        {% for error in field.errors %} {{error}} {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% csrf_token %}
+        <a href="{% url 'global' %}">
+            <button id="submit">Submit</button>
+        </a>
+    </form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block user-info %}
+    <div class="navbar">
+        <a href="{% url 'global' %}">
+            <button class="topButton" id="thisPage">Discover </button>
+        </a>
+        <a href="{% url 'matches' %}">
+            <button class="topButton">Matches</button>
+        </a>
+        <div class="dropdown">
+            <button class="dropdownButton">
+                <i class='fas fa-user-alt'></i> {{ user.first_name }} {{ user.last_name }}
+            </button>
+            <div class="dropdownContent">
+                <a href="{% url 'profile' %}"> View Profile </a>
+                <a href="{% url 'logout' %}"> Log Out </a>   
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block message %}
+    <div id="id_page_name">Your Matches</div>
+{% endblock %}
+
+{% block content %}
+    <div id="my-matches-go-here"></div>
+
+    <script>
+        window.onload = loadMatches();
+        const chatURL = "{% url 'chat' user.profile.id %}"
+        const unmatchURL = "{% url 'unmatch' %}"
+        window.setInterval(() => loadMatches(), 1000);
+    </script>
+{% endblock %}
